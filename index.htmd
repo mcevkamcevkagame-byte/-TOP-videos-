@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOP VIDEOS</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0b0f;
+    color: white;
+}
+header {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+    background: #111116;
+    border-bottom: 1px solid #292930;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #ffffff;
+}
+.logo span {
+    color: #8b5cf6;
+}
+.search {
+    width: 40%;
+    padding: 12px 18px;
+    border-radius: 25px;
+    border: 1px solid #33333d;
+    background: #19191f;
+    color: white;
+    outline: none;
+}
+.login {
+    background: #8b5cf6;
+    border: none;
+    color: white;
+    padding: 11px 20px;
+    border-radius: 22px;
+    font-weight: bold;
+    cursor: pointer;
+}
+nav {
+    display: flex;
+    gap: 10px;
+    padding: 18px 25px;
+    overflow-x: auto;
+}
+nav button {
+    background: #19191f;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+nav button:first-child {
+    background: #8b5cf6;
+}
+main {
+    padding: 10px 25px 50px;
+}
+h1 {
+    font-size: 30px;
+}
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+.video {
+    background: #15151b;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: 0.2s;
+}
+.video:hover {
+    transform: translateY(-4px);
+}
+.video video {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    background: black;
+}
+.info {
+    padding: 14px;
+}
+.title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.author {
+    color: #aaa;
+    margin-bottom: 10px;
+}
+.stats {
+    color: #888;
+    font-size: 14px;
+}
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+.actions button {
+    border: none;
+    background: #24242c;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+.actions button:hover {
+    background: #8b5cf6;
+}
+.upload {
+    margin-top: 45px;
+    padding: 25px;
+    background: #15151b;
+    border-radius: 18px;
+    text-align: center;
+}
+.upload button {
+    background: #8b5cf6;
+    color: white;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 16px;
+}
+.comments {
+    margin-top: 10px;
+}
+.comment-input {
+    width: 100%;
+    padding: 10px;
+    background: #202027;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin-top: 8px;
+}
+.comment-button {
+    margin-top: 8px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    background: #8b5cf6;
+    color: white;
+    cursor: pointer;
+}
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #777;
+}
+@media (max-width: 600px) {
+    .search {
+        width: 35%;
+    }
+    header {
+        padding: 0 12px;
+    }
+    main {
+        padding: 10px 12px;
+    }
+    nav {
+        padding: 12px;
+    }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">
+TOP <span>VIDEOS</span>
+</div>
+<input
+class="search"
+id="search"
+placeholder="🔎 Поиск видео..."
+oninput="searchVideos()">
+<button class="login" onclick="login()">
+Войти
+</button>
+</header>
+<nav>
+<button>🔥 Популярное</button>
+<button>🎬 Новое</button>
+<button>🎵 Музыка</button>
+<button>🎮 Игры</button>
+<button>😂 Юмор</button>
+<button>✨ Другое</button>
+</nav>
+<main>
+<h1>🔥 Самые популярные видео</h1>
+<div class="video-grid" id="videos">
+<div class="video" data-title="Мой первый ролик">
+<video controls>
+<source src="" type="video/mp4">
+</video>
+<div class="info">
+<div class="title">
+Мой первый ролик 🎬
+</div>
+<div class="author">
+@TOP_USER
+</div>
+<div class="stats">
+👁 12 540 просмотров
+</div>
+<div class="actions">
+<button onclick="like(this)">
+❤️ <span>245</span>
+</button>
+<button onclick="showComments(this)">
+💬 Комментарии
+</button>
+</div>
+<div class="comments" style="display:none">
+<input
+class="comment-input"
+placeholder="Написать комментарий...">
+<button
+class="comment-button"
+onclick="addComment(this)">
+Отправить
+</button>
+<div class="comment-list"></div>
+</div>
+</div>
+</div>
+<div class="video" data-title="Roblox gameplay">
+<video controls>
+<source src="" type="video/mp4">
+</video>
+<div class="info">
+<div class="title">
+Roblox gameplay 🎮
+</div>
+<div class="author">
+@RobloxPlayer
+</div>
+<div class="stats">
+👁 8 932 просмотра
+</div>
+<div class="actions">
+<button onclick="like(this)">
+❤️ <span>189</span>
+</button>
+<button onclick="showComments(this)">
+💬 Комментарии
+</button>
+</div>
+<div class="comments" style="display:none">
+<input
+class="comment-input"
+placeholder="Написать комментарий...">
+<button
+class="comment-button"
+onclick="addComment(this)">
+Отправить
+</button>
+<div class="comment-list"></div>
+</div>
+</div>
+</div>
+<div class="video" data-title="Смешное видео">
+<video controls>
+<source src="" type="video/mp4">
+</video>
+<div class="info">
+<div class="title">
+Смешное видео 😂
+</div>
+<div class="author">
+@FunnyUser
+</div>
+<div class="stats">
+👁 6 421 просмотр
+</div>
+<div class="actions">
+<button onclick="like(this)">
+❤️ <span>121</span>
+</button>
+<button onclick="showComments(this)">
+💬 Комментарии
+</button>
+</div>
+<div class="comments" style="display:none">
+<input
+class="comment-input"
+placeholder="Написать комментарий...">
+<button
+class="comment-button"
+onclick="addComment(this)">
+Отправить
+</button>
+<div class="comment-list"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="upload">
+<h2>🎥 Хочешь попасть в TOP VIDEOS?</h2>
+<p>
+Загрузи своё видео и покажи его другим!
+</p>
+<button onclick="uploadVideo()">
+＋ Загрузить видео
+</button>
+<input
+type="file"
+id="file"
+accept="video/*"
+style="display:none">
+</div>
+</main>
+<footer>
+© 2026 TOP VIDEOS
+</footer>
+<script>
+function like(button) {
+let number = button.querySelector("span");
+number.textContent =
+parseInt(number.textContent) + 1;
+button.style.background = "#8b5cf6";
+}
+function showComments(button) {
+let comments =
+button.parentElement.parentElement.querySelector(".comments");
+if (comments.style.display === "none") {
+comments.style.display = "block";
+} else {
+comments.style.display = "none";
+}
+}
+function addComment(button) {
+let input =
+button.parentElement.querySelector(".comment-input");
+let list =
+button.parentElement.querySelector(".comment-list");
+if (input.value.trim() === "") {
+return;
+}
+let comment =
+document.createElement("p");
+comment.textContent =
+"👤 Пользователь: " + input.value;
+list.appendChild(comment);
+input.value = "";
+}
+function searchVideos() {
+let search =
+document.getElementById("search")
+.value.toLowerCase();
+let videos =
+document.querySelectorAll(".video");
+videos.forEach(video => {
+let title =
+video.dataset.title.toLowerCase();
+if (title.includes(search)) {
+video.style.display = "";
+} else {
+video.style.display = "none";
+}
+});
+}
+function login() {
+let name =
+prompt("Введите своё имя:");
+if (name) {
+alert(
+"Добро пожаловать, " + name + "!"
+);
+}
+}
+function uploadVideo() {
+document.getElementById("file").click();
+}
+</script>
+</body>
+</html>
